@@ -1,4 +1,4 @@
-# Demo Park Api
+# Demo Park Api [![Java CI with Maven](https://github.com/jairosousa/pack-api/actions/workflows/continuo-integration.yml/badge.svg)](https://github.com/jairosousa/pack-api/actions/workflows/continuo-integration.yml)
 Acompanhamento do Curso Marcio Ballem Udemy.
 
 * [Curso Udemy](https://www.udemy.com/course/api-rest-e-spring-boot-aprenda-do-zero-e-na-pratica/)
