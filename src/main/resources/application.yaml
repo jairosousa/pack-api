@@ -1,5 +1,28 @@
 #LOCALE
 spring:
-  mvc:
+  web:
     locale-resolver: fixed
     locale: pt_BR
+# MySQL Database Connection Properties
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/demo_park?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo
+    username: root
+    password: root
+#JPA
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    format_sql: false
+
+# PostgreSQL Database Connection Properties
+# O PostgreSQL não fornce parametro de configuração via URL. Por isso, a configuração é realizada pelo
+# Hibernate. Outra forma é definir na criação do banco de dados no PostgreSQL o Timezone desejado
+#  spring.database.driverClassName=org.postgresql.Driver
+#  spring.datasource.url = jdbc:postgresql://localhost:5432/demo_park
+#  spring.datasource.username=postgres
+#  spring.datasource.password=postgres
+#  spring.jpa.properties.hibernate.jdbc.time_zone=America/Sao_Paulo
