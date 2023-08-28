@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Autor Jairo Nascimento
  * @Created 28/08/2023 - 06:45
@@ -35,5 +37,11 @@ public class UsuarioController {
     public ResponseEntity<Usuario> updatePassword(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario user = usuarioService.editarSenha(id, usuario.getPassword());
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Usuario>> getAll() {
+        List<Usuario> users = usuarioService.buscarTodos();
+        return ResponseEntity.ok(users);
     }
 }
