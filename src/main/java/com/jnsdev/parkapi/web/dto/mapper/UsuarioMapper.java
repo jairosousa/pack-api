@@ -6,6 +6,9 @@ import com.jnsdev.parkapi.web.dto.UsuarioResponseDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @Autor Jairo Nascimento
  * @Created 28/08/2023 - 15:15
@@ -27,5 +30,10 @@ public class UsuarioMapper {
         ModelMapper mapper = new ModelMapper();
         mapper.addMappings(props);
         return mapper.map(usuario, UsuarioResponseDto.class);
+    }
+
+    public static List<UsuarioResponseDto> toListDto(List<Usuario> usuarios) {
+        return usuarios.stream().map(usuario -> toDTO(usuario))
+                .collect(Collectors.toList());
     }
 }
