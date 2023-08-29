@@ -1,6 +1,7 @@
 package com.jnsdev.parkapi.web.excepition;
 
 import com.jnsdev.parkapi.exception.EntityNotFoundException;
+import com.jnsdev.parkapi.exception.PasswordInvalidException;
 import com.jnsdev.parkapi.exception.UsernameUniqueViolationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -67,6 +68,22 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(
                         request,
                         HttpStatus.NOT_FOUND,
+                        ex.getMessage())
+                );
+    }
+
+    @ExceptionHandler(PasswordInvalidException.class)
+    public ResponseEntity<ErrorMessage> passwordInvalidException(
+            RuntimeException ex,
+            HttpServletRequest request
+    ) {
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(
+                        request,
+                        HttpStatus.BAD_REQUEST,
                         ex.getMessage())
                 );
     }

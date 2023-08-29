@@ -1,10 +1,10 @@
-package com.jnsdev.parkapi;
+package com.mballem.demoparkapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ParkApiApplicationTests {
+class DemoParkApiApplicationTests {
 
 	@Test
 	void contextLoads() {
