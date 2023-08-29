@@ -1,5 +1,6 @@
 package com.jnsdev.parkapi.web.excepition;
 
+import com.jnsdev.parkapi.exception.EntityNotFoundException;
 import com.jnsdev.parkapi.exception.UsernameUniqueViolationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -53,4 +54,21 @@ public class ApiExceptionHandler {
                         ex.getMessage())
                 );
     }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorMessage> entityNotFoundException(
+            RuntimeException ex,
+            HttpServletRequest request
+    ) {
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(
+                        request,
+                        HttpStatus.NOT_FOUND,
+                        ex.getMessage())
+                );
+    }
+
 }
