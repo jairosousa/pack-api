@@ -16,7 +16,7 @@ import java.util.Map;
  */
 @Getter
 @ToString
-public class ErroMensage {
+public class ErrorMessage {
     private String path;
     private String method;
     private int status;
@@ -24,20 +24,20 @@ public class ErroMensage {
     private String message;
     private Map<String, String> erros;
 
-    public ErroMensage() {
+    public ErrorMessage() {
     }
 
-    public ErroMensage(HttpServletRequest request, HttpStatus status, String message) {
+    public ErrorMessage(HttpServletRequest request, HttpStatus status, String message) {
         this.path = request.getRequestURI();
-        this.path = request.getMethod();
+        this.method = request.getMethod();
         this.status = status.value();
         this.statusText = status.getReasonPhrase();
         this.message = message;
     }
 
-    public ErroMensage(HttpServletRequest request, HttpStatus status, String message, BindingResult result) {
+    public ErrorMessage(HttpServletRequest request, HttpStatus status, String message, BindingResult result) {
         this.path = request.getRequestURI();
-        this.path = request.getMethod();
+        this.method = request.getMethod();
         this.status = status.value();
         this.statusText = status.getReasonPhrase();
         this.message = message;
