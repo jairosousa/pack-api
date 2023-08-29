@@ -18,6 +18,14 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     format_sql: false
 
+# Springdoc OpenApi 3.1 & Swagger 3
+springdoc:
+  swagger-ui:
+    path: /docs-park.html
+  api-docs:
+    path: /docs-park
+  packages-to-scan: com.jnsdev.parkapi
+
 # PostgreSQL Database Connection Properties
 # O PostgreSQL não fornce parametro de configuração via URL. Por isso, a configuração é realizada pelo
 # Hibernate. Outra forma é definir na criação do banco de dados no PostgreSQL o Timezone desejado
