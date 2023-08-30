@@ -1,7 +1,11 @@
 # H2 CONFIG
 spring:
+  datasource:
+    url: jdbc:h2:mem:demo_park
+    driver-class-name: org.h2.Driver
   jpa:
     show-sql: true
     properties:
       hibernate:
-        format_sql: false
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
