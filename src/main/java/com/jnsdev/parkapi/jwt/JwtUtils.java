@@ -21,7 +21,7 @@ import java.util.Date;
 @Slf4j
 public class JwtUtils {
 
-    public static final String JWT_BEARER = "Bearer";
+    public static final String JWT_BEARER = "Bearer ";
     public static final String JWT_AUTHORIZATION = "Authorization";
     public static final String SECRET_KEY = "0123456789-0123456789-0123456789";
     public static final long EXPIRE_DAY = 0;
@@ -50,7 +50,7 @@ public class JwtUtils {
                 .setSubject(username)
                 .setIssuedAt(issuedAt)
                 .setExpiration(limit)
-                .signWith(generateKey(), SignatureAlgorithm.ES256)
+                .signWith(generateKey(), SignatureAlgorithm.HS256)
                 .claim("role", role)
                 .compact();
 
