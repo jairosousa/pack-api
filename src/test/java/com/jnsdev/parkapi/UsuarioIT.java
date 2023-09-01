@@ -145,10 +145,11 @@ public class UsuarioIT {
     }
 
     @Test
-    public void buscarUsuario_ComIDExistente_RetornarUsuarioComStatus400() {
+    public void buscarUsuario_ComIDExistente_RetornarUsuarioComStatus200() {
         UsuarioResponseDto responseBody = testClient
                 .get()
                 .uri("/api/v1/usuarios/100")
+                .headers(JwtAuthentication.getHeaderAuthorization(testClient, "ana@email.com", "123456"))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(UsuarioResponseDto.class)
@@ -158,6 +159,35 @@ public class UsuarioIT {
         org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isEqualTo(100);
         org.assertj.core.api.Assertions.assertThat(responseBody.getUsername()).isEqualTo("ana@email.com");
         org.assertj.core.api.Assertions.assertThat(responseBody.getRole()).isEqualTo("ADMIN");
+
+        responseBody = testClient
+                .get()
+                .uri("/api/v1/usuarios/101")
+                .headers(JwtAuthentication.getHeaderAuthorization(testClient, "ana@email.com", "123456"))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(UsuarioResponseDto.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isEqualTo(101);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getUsername()).isEqualTo("bia@email.com");
+        org.assertj.core.api.Assertions.assertThat(responseBody.getRole()).isEqualTo("CLIENTE");
+
+        responseBody = testClient
+                .get()
+                .uri("/api/v1/usuarios/101")
+                .headers(JwtAuthentication.getHeaderAuthorization(testClient, "bia@email.com", "123456"))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(UsuarioResponseDto.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isEqualTo(101);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getUsername()).isEqualTo("bia@email.com");
+        org.assertj.core.api.Assertions.assertThat(responseBody.getRole()).isEqualTo("CLIENTE");
+
     }
 
     @Test
@@ -180,7 +210,7 @@ public class UsuarioIT {
                 .patch()
                 .uri("/api/v1/usuarios/100")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UsuarioSenhaDto("123456", "654321","654321"))
+                .bodyValue(new UsuarioSenhaDto("123456", "654321", "654321"))
                 .exchange()
                 .expectStatus().isNoContent();
 
@@ -192,7 +222,7 @@ public class UsuarioIT {
                 .patch()
                 .uri("/api/v1/usuarios/0")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UsuarioSenhaDto("123456", "654321","654321"))
+                .bodyValue(new UsuarioSenhaDto("123456", "654321", "654321"))
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody(ErrorMessage.class)
@@ -208,7 +238,7 @@ public class UsuarioIT {
                 .patch()
                 .uri("/api/v1/usuarios/100")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UsuarioSenhaDto("", "",""))
+                .bodyValue(new UsuarioSenhaDto("", "", ""))
                 .exchange()
                 .expectStatus().isEqualTo(422)
                 .expectBody(ErrorMessage.class)
@@ -221,7 +251,7 @@ public class UsuarioIT {
                 .patch()
                 .uri("/api/v1/usuarios/100")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UsuarioSenhaDto("65432", "65432","65432"))
+                .bodyValue(new UsuarioSenhaDto("65432", "65432", "65432"))
                 .exchange()
                 .expectStatus().isEqualTo(422)
                 .expectBody(ErrorMessage.class)
@@ -234,7 +264,7 @@ public class UsuarioIT {
                 .patch()
                 .uri("/api/v1/usuarios/100")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UsuarioSenhaDto("6543210", "6543210","6543210"))
+                .bodyValue(new UsuarioSenhaDto("6543210", "6543210", "6543210"))
                 .exchange()
                 .expectStatus().isEqualTo(422)
                 .expectBody(ErrorMessage.class)
@@ -250,7 +280,7 @@ public class UsuarioIT {
                 .patch()
                 .uri("/api/v1/usuarios/100")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UsuarioSenhaDto("654321", "123456","000000"))
+                .bodyValue(new UsuarioSenhaDto("654321", "123456", "000000"))
                 .exchange()
                 .expectStatus().isEqualTo(400)
                 .expectBody(ErrorMessage.class)
@@ -263,7 +293,7 @@ public class UsuarioIT {
                 .patch()
                 .uri("/api/v1/usuarios/100")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UsuarioSenhaDto("000000", "123456","123456"))
+                .bodyValue(new UsuarioSenhaDto("000000", "123456", "123456"))
                 .exchange()
                 .expectStatus().isEqualTo(400)
                 .expectBody(ErrorMessage.class)

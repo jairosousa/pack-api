@@ -26,3 +26,8 @@ Acompanhamento do Curso Marcio Ballem Udemy.
 ```shell
 docker run --name dev-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=demo_park -d -p 3306:3306 mysql
 ```
+
+## Bcrypt
+encriptar a senha:
+
+https://bcrypt-generator.com/
