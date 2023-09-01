@@ -38,7 +38,7 @@ public class AutenticacaoController {
 
     private final JwtUserDetailsService jwtUserDetailsService;
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     @Operation(summary = "Autenticar na API", description = "Recurso de autenticação na API",
             responses = {
@@ -56,6 +56,7 @@ public class AutenticacaoController {
         try {
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
+            authenticationManager.authenticate(authenticationToken);
             JwtToken token = jwtUserDetailsService.getTokenAuthenticated(dto.getUsername());
             return ResponseEntity.ok(token);
         } catch (AuthenticationException ex) {

@@ -2,6 +2,7 @@ package com.jnsdev.parkapi;
 
 import com.jnsdev.parkapi.jwt.JwtToken;
 import com.jnsdev.parkapi.web.dto.UsuarioLoginDto;
+import com.jnsdev.parkapi.web.excepition.ErrorMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,4 +36,33 @@ public class AutenticacaoIT {
 
         org.assertj.core.api.Assertions.assertThat(token).isNotNull();
     }
+
+    @Test
+    public void autenticar_ComCredenciaisInvalidos_RetornarErroMensageComStatus400() {
+
+        ErrorMessage responseBody = testClient
+                .post()
+                .uri("/api/v1/auth")
+                .bodyValue(new UsuarioLoginDto("invalido@email.com", "123456"))
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(400);
+
+        responseBody = testClient
+                .post()
+                .uri("/api/v1/auth")
+                .bodyValue(new UsuarioLoginDto("ana@email.com", "000000"))
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(400);
+    }
+
 }
