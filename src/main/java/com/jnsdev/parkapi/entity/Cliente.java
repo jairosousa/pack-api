@@ -16,7 +16,7 @@ import java.util.Objects;
 
 /**
  * @Autor Jairo Nascimento
- * @Created 27/08/2023 - 16:12
+ * @Created 02/09/2023 - 07:35
  */
 
 @Getter
