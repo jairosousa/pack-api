@@ -1,0 +1,31 @@
+package com.jnsdev.parkapi.service;
+
+import com.jnsdev.parkapi.entity.Cliente;
+import com.jnsdev.parkapi.exception.CpfUniqueViolationException;
+import com.jnsdev.parkapi.repository.ClienteRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * @Autor Jairo Nascimento
+ * @Created 02/09/2023 - 17:12
+ */
+
+@Service
+@RequiredArgsConstructor
+public class ClienteService {
+
+    private final ClienteRepository clienteRepository;
+
+    @Transactional
+    public Cliente salvar(Cliente cliente) {
+        try {
+            return clienteRepository.save(cliente);
+        } catch (DataIntegrityViolationException ex) {
+            throw new CpfUniqueViolationException(
+                    String.format("CPF '%s' não pode ser cadastrado, já existe no sistema.", cliente.getCpf()));
+        }
+    }
+}
