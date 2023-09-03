@@ -1,9 +1,6 @@
 package com.jnsdev.parkapi.web.excepition;
 
-import com.jnsdev.parkapi.exception.CpfUniqueViolationException;
-import com.jnsdev.parkapi.exception.EntityNotFoundException;
-import com.jnsdev.parkapi.exception.PasswordInvalidException;
-import com.jnsdev.parkapi.exception.UsernameUniqueViolationException;
+import com.jnsdev.parkapi.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,7 +41,7 @@ public class ApiExceptionHandler {
                 );
     }
 
-    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class})
+    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class, CodigoUniqueViolationException.class})
     public ResponseEntity<ErrorMessage> usernameUniqueViolationException(
             RuntimeException ex,
             HttpServletRequest request
