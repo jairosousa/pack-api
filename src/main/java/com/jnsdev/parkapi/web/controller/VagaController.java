@@ -28,6 +28,7 @@ import java.net.URI;
  * @Created 03/09/2023 - 17:09
  */
 
+@Tag(name = "Vagas", description = "Contém todas as opereções relativas ao recurso de uma vaga")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/vagas")
