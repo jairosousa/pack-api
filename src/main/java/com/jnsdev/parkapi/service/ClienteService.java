@@ -2,6 +2,7 @@ package com.jnsdev.parkapi.service;
 
 import com.jnsdev.parkapi.entity.Cliente;
 import com.jnsdev.parkapi.exception.CpfUniqueViolationException;
+import com.jnsdev.parkapi.exception.EntityNotFoundException;
 import com.jnsdev.parkapi.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -27,5 +28,12 @@ public class ClienteService {
             throw new CpfUniqueViolationException(
                     String.format("CPF '%s' não pode ser cadastrado, já existe no sistema.", cliente.getCpf()));
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Cliente buscarPorId(Long id) {
+        return clienteRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Cliente id=%s não encontrado no sistema", id))
+        );
     }
 }
