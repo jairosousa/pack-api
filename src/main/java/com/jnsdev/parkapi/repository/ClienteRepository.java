@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 /**
  * @Autor Jairo Nascimento
  * @Created 02/09/2023 - 17:11
@@ -17,4 +19,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     Page<ClienteProjection> findAllPageable(Pageable pageable);
 
     Cliente findByUsuarioId(Long id);
+
+    Optional<Cliente> findByCpf(String cpf);
 }
